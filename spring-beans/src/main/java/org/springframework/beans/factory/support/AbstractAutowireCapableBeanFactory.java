@@ -138,12 +138,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	private boolean allowRawInjectionDespiteWrapping = false;
 
 	/**
+	 * TODO：自动装配时忽略指定接口或类的依赖注入，使用ignoreDependencyType已经足够
 	 * Dependency types to ignore on dependency check and autowire, as Set of
 	 * Class objects: for example, String. Default is none.
 	 */
 	private final Set<Class<?>> ignoredDependencyTypes = new HashSet<>();
 
 	/**
+	 * TODO：ignoreDependencyInterface 的真正意思是在自动装配时忽略指定接口的实现类中，对外的依赖。
 	 * Dependency interfaces to ignore on dependency check and autowire, as Set of
 	 * Class objects. By default, only the BeanFactory interface is ignored.
 	 */
@@ -264,6 +266,16 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	}
 
 	/**
+	 * TODO：并不是让我们在自动装配时直接忽略实现了该接口的依赖。
+	 * 	忽略该接口的实现类中 和接口setter方法入参类型相同的依赖。
+	 *
+	 * TODO：
+	 * 	 自动装配时忽略该接口实现类中和setter方法入参相同的类型，
+	 * 	 也就是忽略该接口实现类中存在依赖外部的bean属性注入。
+	 *
+	 * TODO:
+	 * 	 https://www.jianshu.com/p/3c7e0608ff1f
+	 *
 	 * Ignore the given dependency interface for autowiring.
 	 * <p>This will typically be used by application contexts to register
 	 * dependencies that are resolved in other ways, like BeanFactory through

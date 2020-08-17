@@ -138,6 +138,13 @@ public abstract class AnnotationConfigUtils {
 	}
 
 	/**
+	 * TODO：在给定的注册表中注册所有相关的 annotation post processors
+	 * 	 ConfigurationClassPostProcessor			BeanFactoryPostProcessor
+	 * 	 AutowiredAnnotationBeanPostProcessor		BeanPostProcessor
+	 * 	 CommonAnnotationBeanPostProcessor			BeanPostProcessor
+	 * 	 EventListenerMethodProcessor				BeanFactoryPostProcessor
+	 * 	 DefaultEventListenerFactory
+	 *
 	 * Register all relevant annotation post processors in the given registry.
 	 * @param registry the registry to operate on
 	 * @param source the configuration source element (already extracted)
@@ -160,18 +167,21 @@ public abstract class AnnotationConfigUtils {
 
 		Set<BeanDefinitionHolder> beanDefs = new LinkedHashSet<>(8);
 
+		// TODO：用于解析配置类（@Configuration）
 		if (!registry.containsBeanDefinition(CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(ConfigurationClassPostProcessor.class);
 			def.setSource(source);
 			beanDefs.add(registerPostProcessor(registry, def, CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME));
 		}
 
+		// TODO：支持@Autowired注解的注入
 		if (!registry.containsBeanDefinition(AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(AutowiredAnnotationBeanPostProcessor.class);
 			def.setSource(source);
 			beanDefs.add(registerPostProcessor(registry, def, AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME));
 		}
 
+		// TODO：支持@Resource注解的注入
 		// Check for JSR-250 support, and if present add the CommonAnnotationBeanPostProcessor.
 		if (jsr250Present && !registry.containsBeanDefinition(COMMON_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(CommonAnnotationBeanPostProcessor.class);
@@ -179,6 +189,7 @@ public abstract class AnnotationConfigUtils {
 			beanDefs.add(registerPostProcessor(registry, def, COMMON_ANNOTATION_PROCESSOR_BEAN_NAME));
 		}
 
+		// TODO：支持 @PersistenceUnit 和 @PersistenceContext 注解的注入
 		// Check for JPA support, and if present add the PersistenceAnnotationBeanPostProcessor.
 		if (jpaPresent && !registry.containsBeanDefinition(PERSISTENCE_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition();
@@ -264,6 +275,14 @@ public abstract class AnnotationConfigUtils {
 		}
 	}
 
+	/**
+	 * TODO：Scope 相关
+	 *
+	 * @param metadata		ScopeMetadata
+	 * @param definition	BeanDefinitionHolder
+	 * @param registry		ApplicationContext
+	 * @return BeanDefinitionHolder
+	 */
 	static BeanDefinitionHolder applyScopedProxyMode(
 			ScopeMetadata metadata, BeanDefinitionHolder definition, BeanDefinitionRegistry registry) {
 

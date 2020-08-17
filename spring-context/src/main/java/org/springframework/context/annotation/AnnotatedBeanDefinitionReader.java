@@ -214,17 +214,26 @@ public class AnnotatedBeanDefinitionReader {
 	<T> void doRegisterBean(Class<T> beanClass, @Nullable Supplier<T> instanceSupplier, @Nullable String name,
 			@Nullable Class<? extends Annotation>[] qualifiers, BeanDefinitionCustomizer... definitionCustomizers) {
 
+		// TODO: 根据 配置类Class对象，创建 AnnotatedGenericBeanDefinition 对象
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
+
+		// TODO：判断是否有 @Condition 注解，判断是否需要注册该Bean
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}
-
 		abd.setInstanceSupplier(instanceSupplier);
+
+		// TODO：解析配置类 是否含有 @Scope 注解，解析元数据
 		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
 		abd.setScope(scopeMetadata.getScopeName());
+
+		// TODO：获取Bean的名称(容器中Bean的id)
 		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
 
+		// TODO：判断配置类上是否有：Lazy、Primary、DependsOn、Role、Description 注解，如果有则会
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
+
+
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
 				if (Primary.class == qualifier) {
@@ -244,6 +253,8 @@ public class AnnotatedBeanDefinitionReader {
 
 		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
 		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+
+		// TODO：将配置类的BeanDefinition注册到 DefaultListableBeanFactory 的 beanDefinitionMap 中 Map<String, BeanDefinition>
 		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 	}
 
