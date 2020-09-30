@@ -45,6 +45,27 @@ import org.springframework.util.Assert;
  * @author Juergen Hoeller
  * @since 2.0
  * @see org.springframework.aop.aspectj.annotation.AspectJAdvisorFactory
+ *
+ * TODO：
+ * 	AnnotationAwareAspectJAutoProxyCreator	重写 initBeanFactory();
+ * 		----------
+ * 		AspectJAwareAdvisorAutoProxyCreator
+ * 		----------
+ * 			AbstractAdvisorAutoProxyCreator	  重写 setBeanFactory() -> initBeanFactory()
+ * 		----------
+ * 					AbstractAutoProxyCreator
+ * 							实现的接口：SmartInstantiationAwareBeanPostProcessor
+ * 											InstantiationAwareBeanPostProcessor
+ * 												 BeanPostProcessor
+ * 									  BeanFactoryAware
+ * 						实现的方法：
+ * 						- postProcessBeforeInstantiation()
+ * 						- postProcessAfterInitialization()
+ * 						- postProcessAfterInitialization()
+ * 						- postProcessBeforeInitialization()
+ *		----------
+ * 						ProxyProcessorSupport
+ *
  */
 @SuppressWarnings("serial")
 public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorAutoProxyCreator {
@@ -58,6 +79,9 @@ public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorA
 	@Nullable
 	private BeanFactoryAspectJAdvisorsBuilder aspectJAdvisorsBuilder;
 
+	public AnnotationAwareAspectJAutoProxyCreator() {
+		System.out.println("-------------- AnnotationAwareAspectJAutoProxyCreator's constructor ---------------");
+	}
 
 	/**
 	 * Set a list of regex patterns, matching eligible @AspectJ bean names.

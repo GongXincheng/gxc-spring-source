@@ -14,4 +14,8 @@ public class BeanFactoryUtilsDemo {
 		System.out.println(BeanFactoryUtils.transformedBeanName("&&name"));// name
 	}
 
+	public String hello() {
+		return "world";
+	}
+
 }

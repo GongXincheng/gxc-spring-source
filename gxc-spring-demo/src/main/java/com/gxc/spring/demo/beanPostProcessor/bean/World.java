@@ -7,5 +7,11 @@ import org.springframework.stereotype.Component;
  * @date 2020/8/13 10:47
  */
 @Component
-public class World {
+public class World implements WordInterface {
+
+	@Override
+	public String hello(String msg) {
+		return msg;
+	}
+
 }

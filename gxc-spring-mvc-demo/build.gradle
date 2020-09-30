@@ -13,10 +13,14 @@ dependencies {
     dependencies {
         testCompile group: 'junit', name: 'junit', version: '4.12'
         compile(project(":spring-context"))
-        compile(project(":spring-aspects"))
         compile(project(":spring-instrument"))
 
         compile(project(":spring-webmvc"))
+        compile(project(":spring-web"))
         provided("javax.servlet:javax.servlet-api:4.0.1")
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.10.3'
 }

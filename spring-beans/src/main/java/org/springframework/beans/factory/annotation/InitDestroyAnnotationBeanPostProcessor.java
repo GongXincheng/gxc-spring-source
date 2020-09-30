@@ -72,6 +72,8 @@ import org.springframework.util.ReflectionUtils;
  * @since 2.5
  * @see #setInitAnnotationType
  * @see #setDestroyAnnotationType
+ *
+ * TODO：用来处理 @PostConstruct & @PreDestroy
  */
 @SuppressWarnings("serial")
 public class InitDestroyAnnotationBeanPostProcessor

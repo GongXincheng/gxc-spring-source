@@ -39,6 +39,8 @@ import org.springframework.lang.Nullable;
  * @see DestructionAwareBeanPostProcessor
  * @see ConfigurableBeanFactory#addBeanPostProcessor
  * @see BeanFactoryPostProcessor
+ *
+ * TODO：在Bean对象创建完成初始化前后调用
  */
 public interface BeanPostProcessor {
 
